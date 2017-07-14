@@ -11,6 +11,8 @@ var functionExpression = function () {
 
 var functionConstructor = new Function("return Math.random();");
 
+var arrowFunction = () => Math.random();
+
 function start() {
   var res = 1;
 
@@ -25,6 +27,12 @@ function start() {
     res *= functionExpression();
   }
   console.timeEnd("functionExpression");
+
+  console.time("arrowFunction");
+  for (var i = 0; i < TEST_REPEATS; i++) {
+    res *= arrowFunction();
+  }
+  console.timeEnd("arrowFunction");
 
   console.time("functionConstructor");
   for (var i = 0; i < TEST_REPEATS; i++) {

@@ -1,18 +1,22 @@
 // directory: https://www.w3schools.com/js/js_function_definition.asp
 
 // NOTE: Order of the calls makes sense!
-// functionDeclaration:   792.690ms
-// functionExpression:    791.519ms
-// arrowFunction:         788.623ms
-// functionConstructor:   783.779ms
-// selfInvokingFunction: 4332.884ms
-// eval:                 4166.240ms
+// functionDeclaration:          793.823ms
+// functionDeclarationWithCall: 1273.833ms
+// functionDeclarationWithBind: 1514.881ms
+// functionExpression:           788.431ms
+// arrowFunction:                777.204ms
+// functionConstructor:          765.344ms
+// selfInvokingFunction:        3973.075ms
+// eval:                        4156.917ms
 
 const TEST_REPEATS = 100000000;
 
 function functionDeclaration() {
   return Math.random();
 }
+
+var functionDeclarationWithBind = functionDeclaration.bind(null);
 
 var functionExpression = function () {
   return Math.random();
@@ -31,6 +35,18 @@ var arrowFunction = () => Math.random();
     res *= functionDeclaration();
   }
   console.timeEnd("functionDeclaration");
+
+  console.time("functionDeclarationWithCall");
+  for (var i = 0; i < TEST_REPEATS; i++) {
+    res *= functionDeclaration.call(null);
+  }
+  console.timeEnd("functionDeclarationWithCall");
+
+  console.time("functionDeclarationWithBind");
+  for (var i = 0; i < TEST_REPEATS; i++) {
+    res *= functionDeclarationWithBind();
+  }
+  console.timeEnd("functionDeclarationWithBind");
 
   console.time("functionExpression");
   for (var i = 0; i < TEST_REPEATS; i++) {

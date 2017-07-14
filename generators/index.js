@@ -77,11 +77,14 @@ function negativeEnumeratedObj(enumeratedObj) {
   var i = 0;
   do {
     var gen = simpleGenerator(); // Garbage collector hates us for this, I guess
-    var step;
-    do {
-      step = gen.next(); // every time new object is created, memory is allocated. GC hates us again.
-      res *= step.value;
-    } while (!step.done);
+    // var step;
+    // do {
+    //   step = gen.next(); // every time new object is created, memory is allocated. GC hates us again.
+    //   res *= step.value;
+    // } while (!step.done);
+    for (var value of gen) {
+      res *= value;
+    }
     i++;
   } while (i < SIMPLE_GENERATOR_REPEATS);
   console.timeEnd("simpleGenerator");
